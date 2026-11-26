@@ -130,7 +130,7 @@ of documents with one-line descriptions and their ID schemes.
 ### package.json
 
 - `bin: { "ai-skills": "bin/ai-skills.mjs" }`, `files: ["bin", "src",
-  "templates"]`, `engines.node: ">=20"`, `test` script runs `vitest run`; the
+  "templates"]`, `engines.node: ">=24.22.1"` (the version pinned in `mise.toml`), `test` script runs `vitest run`; the
   placeholder `main: index.js` is removed.
 
 ### Tests
@@ -148,7 +148,7 @@ of documents with one-line descriptions and their ID schemes.
 - Block appended at the end of an existing `CLAUDE.md`; malformed markers fail
   instead of guessing.
 - No flags in the first version; current directory only.
-- Node 20 as the minimum version.
+- Node 24.22.1 (the version in `mise.toml`) as the minimum version.
 
 ## Left to the builder
 
