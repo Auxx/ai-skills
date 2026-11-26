@@ -1,0 +1,33 @@
+{
+  "name": "@hexmode/ai-skills",
+  "version": "0.0.1",
+  "description": "AI skills I use across projects",
+  "homepage": "https://github.com/Auxx/ai-skills#readme",
+  "author": "Aleksandr 'Aux' Ivanov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Auxx/ai-skills/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Auxx/ai-skills.git"
+  },
+  "type": "commonjs",
+  "bin": {
+    "ai-skills": "bin/ai-skills.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "templates"
+  ],
+  "engines": {
+    "node": ">=24.22.1"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^5.1.2"
+  }
+}
