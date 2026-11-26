@@ -1,0 +1,20 @@
+{
+  "name": "ai-skills",
+  "version": "0.0.1",
+  "description": "AI skills I use across projects",
+  "homepage": "https://github.com/Auxx/ai-skills#readme",
+  "author": "Aleksandr 'Aux' Ivanov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Auxx/ai-skills/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Auxx/ai-skills.git"
+  },
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
