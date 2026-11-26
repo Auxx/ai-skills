@@ -31,11 +31,13 @@ async function readIfExists(filePath) {
  * @returns {Promise<'created' | 'updated' | 'unchanged'>}
  */
 export async function upsertManagedBlock(filePath, content, { start, end }) {
-  const block = `${start}\n\n${content.trim()}\n\n${end}`;
   const existing = await readIfExists(filePath);
+  const eol = existing?.includes('\r\n') ? '\r\n' : '\n';
+  const body = content.trim().replace(/\r?\n/g, eol);
+  const block = `${start}${eol}${eol}${body}${eol}${eol}${end}`;
 
   if (existing === null) {
-    await writeFile(filePath, block + '\n');
+    await writeFile(filePath, block + eol);
     return 'created';
   }
 
@@ -44,7 +46,7 @@ export async function upsertManagedBlock(filePath, content, { start, end }) {
   let next;
 
   if (starts === 0 && ends === 0) {
-    next = existing.trim() === '' ? block + '\n' : existing.trimEnd() + '\n\n' + block + '\n';
+    next = existing.trim() === '' ? block + eol : existing.trimEnd() + eol + eol + block + eol;
   } else if (starts === 1 && ends === 1 && existing.indexOf(start) < existing.indexOf(end)) {
     const from = existing.indexOf(start);
     const to = existing.indexOf(end) + end.length;

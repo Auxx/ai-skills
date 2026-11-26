@@ -55,10 +55,23 @@ describe('upsertManagedBlock', () => {
     expect(await read()).toBe('head\n' + B + '\ntail\n');
   });
 
-  it('preserves CRLF text outside the block', async () => {
-    await writeFile(file, 'a\r\nb\r\n' + oldBlock + '\r\nc\r\n');
+  const crlf = (text) => text.replaceAll('\n', '\r\n');
+
+  it('preserves CRLF text outside the block and writes the block with CRLF', async () => {
+    await writeFile(file, 'a\r\nb\r\n' + crlf(oldBlock) + '\r\nc\r\n');
     await upsertManagedBlock(file, 'hello', markers);
-    expect(await read()).toBe('a\r\nb\r\n' + B + '\r\nc\r\n');
+    expect(await read()).toBe('a\r\nb\r\n' + crlf(B) + '\r\nc\r\n');
+  });
+
+  it('appends to a CRLF file using CRLF throughout', async () => {
+    await writeFile(file, 'a\r\nb\r\n');
+    await upsertManagedBlock(file, 'hello', markers);
+    expect(await read()).toBe('a\r\nb\r\n\r\n' + crlf(B) + '\r\n');
+  });
+
+  it('returns unchanged for an identical CRLF block', async () => {
+    await writeFile(file, 'head\r\n' + crlf(B) + '\r\n');
+    expect(await upsertManagedBlock(file, 'hello', markers)).toBe('unchanged');
   });
 
   it('returns unchanged and does not write when identical', async () => {

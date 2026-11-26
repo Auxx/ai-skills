@@ -51,6 +51,19 @@ describe('ai-skills CLI', () => {
     expect(result.stderr).toContain('Usage: ai-skills <command>');
   });
 
+  it.each([['init-docs', '--help'], ['init-docs', '--dry-run']])(
+    'rejects extra arguments (%s %s) without writing anything',
+    async (...args) => {
+      const result = await cli(cwd, ...args);
+
+      expect(result.code).toBe(1);
+      expect(result.stderr).toContain(`Unexpected arguments: ${args[1]}`);
+      expect(result.stderr).toContain('Usage: ai-skills <command>');
+      expect(existsSync(join(cwd, 'docs'))).toBe(false);
+      expect(existsSync(join(cwd, 'CLAUDE.md'))).toBe(false);
+    },
+  );
+
   it('runs init-docs in the working directory', async () => {
     const result = await cli(cwd, 'init-docs');
 

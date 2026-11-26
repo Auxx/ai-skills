@@ -25,7 +25,7 @@ function usage(operations) {
 
 async function main(args) {
   const operations = await loadOperations();
-  const [command] = args;
+  const [command, ...rest] = args;
 
   if (command === undefined || command === '--help' || command === '-h') {
     process.stdout.write(usage(operations));
@@ -35,6 +35,12 @@ async function main(args) {
   const operation = operations.find(({ name }) => name === command);
   if (!operation) {
     process.stderr.write(`Unknown command: ${command}\n\n${usage(operations)}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  if (rest.length > 0) {
+    process.stderr.write(`Unexpected arguments: ${rest.join(' ')}\n\n${usage(operations)}`);
     process.exitCode = 1;
     return;
   }
